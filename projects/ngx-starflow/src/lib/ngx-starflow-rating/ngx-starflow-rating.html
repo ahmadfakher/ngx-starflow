@@ -1,0 +1,20 @@
+<div class="ngx-starflow-container" [class]="{
+    'ngx-starflow-w-fit': spacing() !== 5,
+    'ngx-starflow-w-full': spacing() === 5,
+}">
+
+    <!-- BACKGROUND ICONS -->
+    <div class="ngx-starflow-position ngx-starflow-bg-stars" [style.color]="bgColor()" [class]="[spacingClass()]">
+        @for (star of stars; track $index) {
+        <i [class]="[bgIconClass(),sizeClass()]"></i>
+        }
+    </div>
+
+    <!-- FOREGROUND ICONS -->
+    <div class="ngx-starflow-position ngx-starflow-rating-stars" [style.color]="fgColor()" [class]="[spacingClass()]"
+        [style.clip-path]="'inset(-2px ' + calculateRating() + '% 0 0)'">
+        @for (star of stars; track $index) {
+        <i [class]="[activeIconClass(),sizeClass()]"></i>
+        }
+    </div>
+</div>
