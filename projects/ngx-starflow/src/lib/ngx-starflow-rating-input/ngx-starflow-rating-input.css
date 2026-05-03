@@ -1,0 +1,81 @@
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 24px;
+    align-self: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.rating label {
+    color: var(--bg-color);
+    cursor: pointer;
+}
+
+.rating label:hover,
+.rating label:hover~label {
+    color: var(--hover-color);
+}
+
+.rating input:checked~label {
+    color: var(--active-color);
+}
+
+
+/* GAP AND FONTSIZE CLASSES */
+
+.ngx-starflow-gap-0 {
+    gap: 0;
+}
+
+.ngx-starflow-gap-1 {
+    gap: .25rem;
+}
+
+.ngx-starflow-gap-2 {
+    gap: .5rem;
+}
+
+.ngx-starflow-gap-3 {
+    gap: .75rem;
+}
+
+.ngx-starflow-gap-4 {
+    gap: 1rem;
+}
+
+.ngx-starflow-justify-between {
+    justify-content: space-between;
+}
+
+.ngx-starflow-text-xs {
+    font-size: .75rem;
+}
+
+.ngx-starflow-text-sm {
+    font-size: .875rem;
+}
+
+.ngx-starflow-text-normal {
+    font-size: 1rem;
+}
+
+.ngx-starflow-text-lg {
+    font-size: 1.125rem;
+}
+
+.ngx-starflow-text-xl {
+    font-size: 1.25rem;
+}
+
+.ngx-starflow-text-2xl {
+    font-size: 1.5rem;
+}
+
+.ngx-starflow-text-3xl {
+    font-size: 1.875rem;
+}
+
+.ngx-starflow-text-4xl {
+    font-size: 2.25rem;
+}

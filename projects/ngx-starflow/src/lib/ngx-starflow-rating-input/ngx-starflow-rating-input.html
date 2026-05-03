@@ -1,0 +1,19 @@
+<div>
+    <div class="rating" [class]="[spacingClass()]" [style.--hover-color]="hoverColor()"
+        [style.--active-color]="activeColor()" [style.--bg-color]="bgColor()">
+        @for (rate of ratings; track rate) {
+        <input [id]="'rating-' + rate" type="radio" [value]="rate" name="rating" hidden [formControl]="ratingInput()">
+        <label [for]="'rating-' + rate">
+            <i [class]="iconClass() + ' ' + sizeClass()"></i>
+        </label>
+        }
+    </div>
+    @if (ratingInput().touched) {
+    @if (ratingInput().hasError('required') && required()) {
+    <p class="text-discount text-sm">Rating is required</p>
+    }
+    @if (ratingInput().hasError('min') || ratingInput().hasError('max')) {
+    <p class="text-discount text-sm">Rating must be between 0 and 5</p>
+    }
+    }
+</div>

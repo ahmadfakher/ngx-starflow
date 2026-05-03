@@ -1,64 +1,245 @@
-# NgxStarflow
+# ⭐ ngx-starflow
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+![npm version](https://img.shields.io/npm/v/ngx-starflow)
+![npm downloads](https://img.shields.io/npm/dm/ngx-starflow)
+![GitHub release](https://img.shields.io/github/v/release/ahmadfakher/ngx-starflow)
+![license](https://img.shields.io/npm/l/ngx-starflow)
 
-## Code scaffolding
+**ngx-starflow v2.0** is a lightweight Angular star rating library with **fractional precision display** and a new **interactive input component**.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+It provides:
 
-```bash
-ng generate component component-name
-```
+- ⭐ `<starflow>` → display-only rating component
+- ✍️ `<starflow-input>` → interactive rating input component
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+# 🚀 What’s new in v2.0
 
-## Building
+## ✨ New components
 
-To build the library, run:
+- `<starflow>` (replaces `ngx-starflow`)
+- `<starflow-input>` (new rating input component)
 
-```bash
-ng build ngx-starflow
-```
+## 🧠 Improvements
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+- Bug fixes & stability improvements
+- Better Angular signals support
+- Improved form handling
+- Clear separation between display and input components
 
-### Publishing the Library
+---
 
-Once the project is built, you can publish your library by following these steps:
+# ✨ Features
 
-1. Navigate to the `dist` directory:
+- 🎯 Fractional ratings support (e.g. 3.7, 4.25)
+- ⚡ Lightweight standalone Angular components
+- 🎨 Fully customizable (size, spacing, colors, icons)
+- 🚫 No Tailwind dependency
+- ⭐ Font Awesome based rendering
+- 🔁 Reactive Forms + Output support
+- 🧩 Separate display & input components
 
-   ```bash
-   cd dist/ngx-starflow
-   ```
+---
 
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+# 📦 Installation
 
 ```bash
-ng e2e
+npm install ngx-starflow
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+# ⚙️ Requirements
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular 17+
+- Font Awesome
+
+## Install Font Awesome
+
+```bash
+npm install @fortawesome/fontawesome-free
+```
+
+Add to your `angular.json`:
+
+```json
+"styles": [
+  "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+]
+```
+
+---
+
+# ⭐ Starflow (Display Component)
+
+## Import
+
+```ts
+import { Starflow } from 'ngx-starflow';
+```
+
+## Usage
+
+```ts
+@Component({
+  standalone: true,
+  imports: [Starflow],
+  template: `<starflow [rating]="4.3"></starflow>`,
+})
+export class AppComponent {}
+```
+
+---
+
+## Inputs
+
+| Input         | Type   | Default              | Description         |
+| ------------- | ------ | -------------------- | ------------------- |
+| `rating`      | number | —                    | Rating (0 → 5)      |
+| `size`        | string | `md`                 | Star size           |
+| `spacing`     | number | `0`                  | Gap between stars   |
+| `bgColor`     | string | `#737373`            | Inactive star color |
+| `activeColor` | string | `#f0b100`            | Active star color   |
+| `iconClass`   | string | `fa-regular fa-star` | Star icon class     |
+
+---
+
+## Example
+
+```html
+<starflow [rating]="3.8" size="lg" [spacing]="2"></starflow>
+```
+
+---
+
+# ✍️ Starflow Input Component
+
+## Import
+
+```ts
+import { StarflowInput } from 'ngx-starflow';
+```
+
+## Usage
+
+```ts
+@Component({
+  standalone: true,
+  imports: [StarflowInput],
+  template: ` <starflow-input (ratingChange)="onRatingChange($event)"> </starflow-input> `,
+})
+export class AppComponent {
+  onRatingChange(value: number) {
+    console.log(value);
+  }
+}
+```
+
+---
+
+## Outputs
+
+| Output         | Type   | Description        |
+| -------------- | ------ | ------------------ |
+| `ratingChange` | number | Emits rating value |
+
+---
+
+## Inputs
+
+| Input         | Type    | Default              | Description            |
+| ------------- | ------- | -------------------- | ---------------------- |
+| `required`    | boolean | `false`              | Required validation    |
+| `size`        | string  | `md`                 | Star size              |
+| `spacing`     | number  | `0`                  | Gap between stars      |
+| `bgColor`     | string  | `#737373`            | Background stars color |
+| `hoverColor`  | string  | `#f0b1004D`          | Hover color            |
+| `activeColor` | string  | `#f0b100`            | Active color           |
+| `iconClass`   | string  | `fa-regular fa-star` | Star icon class        |
+
+---
+
+## Example
+
+```html
+<starflow-input [required]="true" size="lg" [spacing]="2" (ratingChange)="onRatingChange($event)">
+</starflow-input>
+```
+
+---
+
+# 🧠 Validation
+
+Built-in validation:
+
+- required
+- min (0)
+- max (5)
+
+Errors:
+
+- Rating is required
+- Rating must be between 0 and 5
+
+---
+
+# 🎨 Size Options
+
+- xs → 12px
+- sm → 14px
+- md → 16px (default)
+- lg → 18px
+- xl → 20px
+- 2xl → 24px
+- 3xl → 30px
+- 4xl → 36px
+
+---
+
+# 📏 Spacing Options
+
+- 0 → none
+- 1 → 4px
+- 2 → 8px
+- 3 → 12px
+- 4 → 16px
+- 5 → evenly spaced
+
+---
+
+# 🎨 Customization
+
+```html
+<starflow bgColor="#ccc" activeColor="gold"></starflow>
+```
+
+---
+
+# 🧠 How it works
+
+- Background stars (inactive layer)
+- Foreground stars (active layer)
+- Fractional rendering using CSS clipping (`clip-path`)
+
+---
+
+# 📌 Roadmap
+
+- [ ] Two-way binding `[(rating)]`
+- [ ] Half-star support
+- [ ] Animations
+- [ ] ControlValueAccessor support
+- [ ] RTL support
+
+---
+
+# 🤝 Contributing
+
+Pull requests and issues are welcome.
+
+---
+
+# 📄 License
+
+MIT

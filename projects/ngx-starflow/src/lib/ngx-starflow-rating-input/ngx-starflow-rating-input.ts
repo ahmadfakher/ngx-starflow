@@ -1,29 +1,31 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, inject, input, InputSignal, output, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'starflow',
-  imports: [],
-  standalone: true,
-  templateUrl: './ngx-starflow-rating.html',
-  styleUrl: './ngx-starflow-rating.css',
+  selector: 'starflow-input',
+  imports: [ReactiveFormsModule],
+  templateUrl: './ngx-starflow-rating-input.html',
+  styleUrl: './ngx-starflow-rating-input.css',
 })
-export class NgxStarflowRating {
-  //? RATING VALUE
-  // THE RATING VALUE THAT WILL BE USED (RESTRICTED TO BE BETWEEN 0 AND 5)
+export class NgxStarflowRatingInput {
+  private readonly fb = inject(FormBuilder);
+
+  // OUTPUT RATING VALUE
   /**
-   * Value of the rating that will be shown
-   * Accept values anywhere between 0 and 5 (including fractions)
-   * ex: 3.65
+   * Emit rating value whenever it changes
    * For more info https://www.github.com/ahmadfakher/ngx-starflow#readme
    */
-  rating: InputSignal<number> = input.required({
-    transform: (value: number) => {
-      if (value < 0 || value > 5) {
-        throw new Error('Rating must be between 0 and 5');
+  ratingChange = output<number>();
+  constructor() {
+    this.ratingInput().valueChanges.subscribe((value) => {
+      if (value !== null) {
+        this.ratingChange.emit(Number(value));
       }
-      return value;
-    },
-  });
+    });
+  }
+
+  //? REQUIRED VALIDATION
+  required = input<boolean>(false);
 
   //? STARS FONT SIZE
   // DEFAULT MD
@@ -104,43 +106,43 @@ export class NgxStarflowRating {
    * For more info https://www.github.com/ahmadfakher/ngx-starflow#readme
    */
   bgColor: InputSignal<string> = input('#737373');
-  // BACKGROUND STARS ICON
-  // DEFAULT fa-regular fa-star
-  // ANY FONTAWESOME CLASS WILL WORK
+
+  //? HOVER STARS
+  // HOVER STARS COLOR
+  // DEFAULT #f0b1004D
   /**
-   * Inactive star icon
-   * Valid font awesome classes will work
-   * default 'fa-regular fa-star'
+   * Hover star color
+   * Accepts any color format
+   * default #f0b1004D
    * For more info https://www.github.com/ahmadfakher/ngx-starflow#readme
    */
-  bgIconClass = input<string>('fa-regular fa-star');
+  hoverColor: InputSignal<string> = input('#f0b1004D');
 
   //? ACTIVE STARS
   // ACTIVE STARS COLOR
   // DEFAULT #f0b100
   /**
-   * Active star color
+   * Selected star color
    * Accepts any color format
    * default #f0b100
    * For more info https://www.github.com/ahmadfakher/ngx-starflow#readme
    */
-  fgColor: InputSignal<string> = input('#f0b100');
-  // ACTIVE STARS ICON
-  // DEFAULT fa-solid fa-star
+  activeColor: InputSignal<string> = input('#f0b100');
+
+  // STARS ICON
+  // DEFAULT fa-regular fa-star
   // ANY FONTAWESOME CLASS WILL WORK
   /**
-   * active star icon
+   * Star icon
    * Valid font awesome classes will work
    * default 'fa-solid fa-star'
    * For more info https://www.github.com/ahmadfakher/ngx-starflow#readme
    */
-  activeIconClass = input<string>('fa-solid fa-star');
+  iconClass = input<string>('fa-solid fa-star');
 
-  stars = Array(5).fill(0);
+  ratings = [5, 4, 3, 2, 1];
 
-  // FUNCTION TO CALCULATE THE RATING AS A PERCENTAGE TO FILL ACCORDINGLY
-  calculateRating(): number {
-    const percentage: number = (this.rating() / 5) * 100;
-    return 100 - percentage;
-  }
+  ratingInput = signal(
+    this.fb.control('', [Validators.required, Validators.min(1), Validators.max(5)]),
+  );
 }
