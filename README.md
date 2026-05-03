@@ -5,24 +5,41 @@
 ![GitHub release](https://img.shields.io/github/v/release/ahmadfakher/ngx-starflow)
 ![license](https://img.shields.io/npm/l/ngx-starflow)
 
-**ngx-starflow** is a lightweight Angular component for displaying **fractional star ratings with full precision** — not limited to half-stars.
+**ngx-starflow v2.0** is a lightweight Angular star rating library with **fractional precision display** and a new **interactive input component**.
 
-It is built for performance, flexibility, and smooth visual accuracy using pure CSS (no Tailwind dependency).
+It provides:
+- ⭐ `<starflow>` → display-only rating component
+- ✍️ `<starflow-input>` → interactive rating input component
 
 ---
 
-## ✨ Features
+# 🚀 What’s new in v2.0
 
-- 🎯 **Fractional ratings support** (e.g. 3.7, 4.23, 2.95)
-- ⚡ Lightweight & standalone Angular component
-- 🎨 Fully customizable (size, spacing, icons, colors)
+## ✨ New components
+- `<starflow>` (replaces `ngx-starflow`)
+- `<starflow-input>` (new rating input component)
+
+## 🧠 Improvements
+- Bug fixes & stability improvements
+- Better Angular signals support
+- Improved form handling
+- Clear separation between display and input components
+
+---
+
+# ✨ Features
+
+- 🎯 Fractional ratings support (e.g. 3.7, 4.25)
+- ⚡ Lightweight standalone Angular components
+- 🎨 Fully customizable (size, spacing, colors, icons)
 - 🚫 No Tailwind dependency
 - ⭐ Font Awesome based rendering
-- 🧠 Simple and developer-friendly API
+- 🔁 Reactive Forms + Output support
+- 🧩 Separate display & input components
 
 ---
 
-## 📦 Installation
+# 📦 Installation
 
 ```bash
 npm install ngx-starflow
@@ -30,18 +47,18 @@ npm install ngx-starflow
 
 ---
 
-## ⚙️ Requirements
+# ⚙️ Requirements
 
 - Angular 17+
 - Font Awesome
 
-### Install Font Awesome
+## Install Font Awesome
 
 ```bash
 npm install @fortawesome/fontawesome-free
 ```
 
-Add it to your global styles:
+Add to your `angular.json`:
 
 ```json
 "styles": [
@@ -51,154 +68,181 @@ Add it to your global styles:
 
 ---
 
-## 🚀 Usage
+# ⭐ Starflow (Display Component)
 
-### 1. Import the component
+## Import
 
 ```ts
-import { NgxStarflowRating } from 'ngx-starflow';
+import { Starflow } from 'ngx-starflow';
 ```
 
----
-
-### 2. Use in a standalone component
+## Usage
 
 ```ts
 @Component({
   standalone: true,
-  imports: [NgxStarflowRating],
-  template: ` <ngx-starflow [rating]="3.7"></ngx-starflow> `,
+  imports: [Starflow],
+  template: `<starflow [rating]="4.3"></starflow>`,
 })
 export class AppComponent {}
 ```
 
 ---
 
-## 🧩 Inputs
+## Inputs
 
-| Input             | Required | Type     | Default              | Description                   |
-| ----------------- | -------- | -------- | -------------------- | ----------------------------- |
-| `rating`          | ✔        | `number` | —                    | Rating value (0 → 5)          |
-| `size`            | ✖        | `string` | `'md'`               | Controls star size            |
-| `spacing`         | ✖        | `number` | `0`                  | Space between stars           |
-| `bgColor`         | ✖        | `string` | `#737373`            | Color of inactive stars       |
-| `fgColor`         | ✖        | `string` | `#f0b100`            | Color of active stars         |
-| `bgIconClass`     | ✖        | `string` | `fa-regular fa-star` | Icon class for inactive stars |
-| `activeIconClass` | ✖        | `string` | `fa-solid fa-star`   | Icon class for active stars   |
+| Input       | Type   | Default            | Description            |
+|-------------|--------|--------------------|------------------------|
+| `rating`    | number | —                  | Rating (0 → 5)        |
+| `size`      | string | `md`               | Star size             |
+| `spacing`   | number | `0`                | Gap between stars     |
+| `bgColor`   | string | `#737373`          | Inactive star color    |
+| `activeColor` | string | `#f0b100`        | Active star color      |
+| `iconClass` | string | `fa-regular fa-star` | Star icon class      |
 
 ---
 
-## 🎨 Size Options
+## Example
 
 ```html
-<ngx-starflow size="xs"></ngx-starflow>
-<!-- 12px -->
-<ngx-starflow size="sm"></ngx-starflow>
-<!-- 14px -->
-<ngx-starflow size="md"></ngx-starflow>
-<!-- 16px (default) -->
-<ngx-starflow size="lg"></ngx-starflow>
-<!-- 18px -->
-<ngx-starflow size="xl"></ngx-starflow>
-<!-- 20px -->
-<ngx-starflow size="2xl"></ngx-starflow>
-<!-- 24px -->
-<ngx-starflow size="3xl"></ngx-starflow>
-<!-- 30px -->
-<ngx-starflow size="4xl"></ngx-starflow>
-<!-- 36px -->
+<starflow [rating]="3.8" size="lg" [spacing]="2"></starflow>
 ```
 
 ---
 
-## 📏 Spacing Options
+# ✍️ Starflow Input Component
+
+## Import
+
+```ts
+import { StarflowInput } from 'ngx-starflow';
+```
+
+## Usage
+
+```ts
+@Component({
+  standalone: true,
+  imports: [StarflowInput],
+  template: `
+    <starflow-input
+      (ratingChange)="onRatingChange($event)">
+    </starflow-input>
+  `,
+})
+export class AppComponent {
+  onRatingChange(value: number) {
+    console.log(value);
+  }
+}
+```
+
+---
+
+## Outputs
+
+| Output | Type   | Description        |
+|--------|--------|--------------------|
+| `ratingChange` | number | Emits rating value |
+
+---
+
+## Inputs
+
+| Input        | Type    | Default              | Description            |
+|--------------|---------|----------------------|------------------------|
+| `required`   | boolean | `false`              | Required validation    |
+| `size`       | string  | `md`                 | Star size             |
+| `spacing`    | number  | `0`                  | Gap between stars     |
+| `bgColor`    | string  | `#737373`            | Background stars color |
+| `hoverColor` | string  | `#f0b1004D`          | Hover color            |
+| `activeColor`| string  | `#f0b100`            | Active color           |
+| `iconClass`  | string  | `fa-regular fa-star` | Star icon class        |
+
+---
+
+## Example
 
 ```html
-<ngx-starflow [spacing]="0"></ngx-starflow>
-<!-- none -->
-<ngx-starflow [spacing]="1"></ngx-starflow>
-<!-- 4px -->
-<ngx-starflow [spacing]="2"></ngx-starflow>
-<!-- 8px -->
-<ngx-starflow [spacing]="3"></ngx-starflow>
-<!-- 12px -->
-<ngx-starflow [spacing]="4"></ngx-starflow>
-<!-- 16px -->
-<ngx-starflow [spacing]="5"></ngx-starflow>
-<!-- evenly distributed -->
+<starflow-input
+  [required]="true"
+  size="lg"
+  [spacing]="2"
+  (ratingChange)="onRatingChange($event)">
+</starflow-input>
 ```
 
 ---
 
-## 🎨 Customization
+# 🧠 Validation
 
-### Colors
+Built-in validation:
+- required
+- min (0)
+- max (5)
 
-Any valid CSS color value:
+Errors:
+- Rating is required
+- Rating must be between 0 and 5
+
+---
+
+# 🎨 Size Options
+
+- xs → 12px  
+- sm → 14px  
+- md → 16px (default)  
+- lg → 18px  
+- xl → 20px  
+- 2xl → 24px  
+- 3xl → 30px  
+- 4xl → 36px  
+
+---
+
+# 📏 Spacing Options
+
+- 0 → none  
+- 1 → 4px  
+- 2 → 8px  
+- 3 → 12px  
+- 4 → 16px  
+- 5 → evenly spaced  
+
+---
+
+# 🎨 Customization
 
 ```html
-<ngx-starflow bgColor="#ccc" fgColor="gold"></ngx-starflow>
+<starflow bgColor="#ccc" activeColor="gold"></starflow>
 ```
 
 ---
 
-### Icons
+# 🧠 How it works
 
-Any valid Font Awesome class:
-
-```html
-<ngx-starflow bgIconClass="fa-regular fa-star" activeIconClass="fa-solid fa-star"> </ngx-starflow>
-```
+- Background stars (inactive layer)
+- Foreground stars (active layer)
+- Fractional rendering using CSS clipping (`clip-path`)
 
 ---
 
-## 🧠 How it works
+# 📌 Roadmap
 
-The component renders two overlapping layers:
-
-- Background stars (inactive state)
-- Foreground stars (active rating)
-
-The active layer is revealed using:
-
-```css
-clip-path: inset(...);
-```
-
-This enables smooth **fractional rendering without extra DOM complexity**.
-
----
-
-## 💡 Example
-
-```html
-<ngx-starflow [rating]="4.3" size="lg" [spacing]="2"> </ngx-starflow>
-```
-
----
-
-## ⚠️ Notes
-
-- Rating must be between **0 and 5**
-- Uses Font Awesome for icons
-- Fully self-contained styling (no Tailwind required)
-
----
-
-## 📌 Roadmap
-
-- [ ] Hover-based rating input mode
-- [ ] Smooth animations
+- [ ] Two-way binding `[(rating)]`
+- [ ] Half-star support
+- [ ] Animations
+- [ ] ControlValueAccessor support
 - [ ] RTL support
 
 ---
 
-## 🤝 Contributing
+# 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome.
+Pull requests and issues are welcome.
 
 ---
 
-## 📄 License
+# 📄 License
 
 MIT
