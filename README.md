@@ -1,5 +1,10 @@
 # ⭐ ngx-starflow
 
+![npm version](https://img.shields.io/npm/v/ngx-starflow)
+![npm downloads](https://img.shields.io/npm/dm/ngx-starflow)
+![GitHub release](https://img.shields.io/github/v/release/ahmadfakher/ngx-starflow)
+![license](https://img.shields.io/npm/l/ngx-starflow)
+
 **ngx-starflow** is a lightweight Angular component for displaying **fractional star ratings with full precision** — not limited to half-stars.
 
 It is built for performance, flexibility, and smooth visual accuracy using pure CSS (no Tailwind dependency).
